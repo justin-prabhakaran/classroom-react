@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+
+* {
+    font-family: "Ubuntu", sans-serif;
+}
+
+body {
+    background-image: linear-gradient(to right, #d3cce3, #e9e4f0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.login-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    width: 500px;
+    padding: 30px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.form-item {
+    margin-bottom: 25px;
+}
+
+.form-label {
+    margin-bottom: 20px;
+    font-weight: 500;
+    font-size: 16px;
+    color: #333;
+}
+
+.form-input {
+    margin-top: 8px;
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+.form-input:focus {
+    border-color: #0b57d0;
+    outline: none;
+}
+
+.form-btn {
+    padding: 12px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: #0b57d0;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;    
+    /* align-self: center;
+    width: max-content; */
+    transition: background-color 0.3s;
+}
+
+.form-btn:hover {
+    background-color: #0147b8;
+}
