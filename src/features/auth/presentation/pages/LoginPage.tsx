@@ -47,14 +47,21 @@ const LoginPage: React.FC = () => {
   };
 
   // Handle change for the input box
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>, isStudent : boolean) => {
     const value = event.target.value;
     setInput(value);
-
-    if (validateRegNo(value) || validateEmail(value) || value === "") {
-      setInputError("");
-    } else {
-      setInputError("Input must be a valid.");
+    if(isStudent){
+      if (validateRegNo(value) || validateEmail(value) || value === "") {
+        setInputError("");
+      } else {
+        setInputError("Input must be a valid.");
+      }
+    }else{
+      if (validateEmail(value) || value === "") {
+        setInputError("");
+      } else {
+        setInputError("Input must be a valid.");
+      }
     }
   };
 
@@ -76,7 +83,9 @@ const LoginPage: React.FC = () => {
                   placeholder="Reg No / Email"
                   type="text"
                   value={input}
-                  onChange={handleInputChange}
+                  onChange={(event : React.ChangeEvent<HTMLInputElement>) => {
+                    handleInputChange(event,true);
+                  }}
                   required
                 />
                 {inputError && (
@@ -107,7 +116,9 @@ const LoginPage: React.FC = () => {
                   placeholder="Email"
                   type="email"
                   value={input}
-                  onChange={handleInputChange}
+                  onChange={(event : React.ChangeEvent<HTMLInputElement>) => {
+                    handleInputChange(event,false);
+                  }}
                   required
                 />
                 {inputError && (
