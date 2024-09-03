@@ -50,9 +50,11 @@ function App() {
   return (
     <div className='content'>
       <div className="container">
+        
         <div className="left">
           <img className='side-image' src={LoginImg} alt='manlin' />
         </div>
+        
         <div className="right">
           <div className="login-container">
             <div className='flipbtn'>

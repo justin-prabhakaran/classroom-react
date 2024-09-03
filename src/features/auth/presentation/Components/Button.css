@@ -1,17 +1,17 @@
 .btn-button{
-    width: auto;
+    width: 80%;
     padding: 15px;
     border: none;
     border-radius: 20px;
-    background-color: #006FFD;
+    background-color: var(--primaryBlue);
     color: white;
     font-size: 16px;
     position: relative;
-    top: 1px;
+    top: 0px;
     cursor: pointer;
     transition: background-color 0.3s;
     font-weight: bolder;
 }
 .btn-button:hover{
-    background-color: #005ed8;
+    background-color: var(--hoverPrimary);
 }
