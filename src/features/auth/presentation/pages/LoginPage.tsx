@@ -1,148 +1,123 @@
-import React, { useState } from "react";
-import "./LoginPage.css";
+import React, { useState, ChangeEvent, FormEvent } from 'react';
+import './LoginPage.css';
+import LoginImg from '../asset/Reset password-pana1.svg';
+import Button from '../Components/Button';
 
-const LoginPage: React.FC = () => {
-  const [input, setInput] = useState<string>("");
-  const [inputError, setInputError] = useState<string>("");
+function App() {
+  const [activeForm, setActiveForm] = useState<'student' | 'teacher'>('student');
+  const [input, setInput] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
-  // Validate the "Reg No" input
-  const validateRegNo = (value: string): boolean => {
-    const regNoPattern = /^9537\d*$/;
-    return regNoPattern.test(value);
-  };
-
-  // Validate the "Email" input
-  const validateEmail = (value: string): boolean => {
-    const emailPattern = /^[a-zA-Z0-9._%+-]+@aaacet\.ac\.in$/;
-    return emailPattern.test(value);
-  };
-
-  // Handle form submission for the Student (Log in) form
-  const handleStudentSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    const isRegNoValid = validateRegNo(input);
-    const isEmailValid = validateEmail(input);
-
-    if (!isRegNoValid && !isEmailValid) {
-      setInputError("Input must be a valid registration");
-      return;
-    }
-
-    // Add your logic for handling the student login here
-    console.log("Student form submitted");
-  };
-
-  // Handle form submission for the Teacher (Sign up) form
-  const handleTeacherSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    if (!validateEmail(input)) {
-      setInputError("Email must be valid!");
-      return;
-    }
-
-    // Add your logic for handling the teacher signup here
-    console.log("Teacher form submitted");
-  };
-
-  // Handle change for the input box
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>, isStudent : boolean) => {
-    const value = event.target.value;
-    setInput(value);
-    if(isStudent){
-      if (validateRegNo(value) || validateEmail(value) || value === "") {
-        setInputError("");
-      } else {
-        setInputError("Input must be a valid.");
+  const validateInput = (input: string): string => {
+    if (/^[0-9]+$/.test(input)) { 
+      const regNoRegex = /^9537\d{8}$/;
+      if (!regNoRegex.test(input)) {
+        return 'Invalid Reg No. It should start with 9537';
       }
-    }else{
-      if (validateEmail(value) || value === "") {
-        setInputError("");
-      } else {
-        setInputError("Input must be a valid.");
+    } else if (input.includes('@')) { 
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(input) || !input.endsWith('@aaacet.ac.in')) {
+        return 'Invalid email. It should end with @aaacet.ac.in';
       }
+    } else if (input !== '') { 
+      return 'Input should be starting with 9537 or an email ending with @aaacet.ac.in';
     }
+    return ''; 
+  };
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
+    setInput(newValue);
+    const error = validateInput(newValue);
+    setErrorMessage(error);
+  };
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    if (!errorMessage) {
+      alert('Login successful!');
+    }
+  };
+
+  const handleFormSwitch = (form: 'student' | 'teacher') => {
+    setActiveForm(form);
+    setInput('');
+    setPassword('');
+    setErrorMessage('');
   };
 
   return (
-    <div className="wrapper">
-      <div className="card-switch">
-        <label className="switch">
-          <input type="checkbox" className="toggle" />
-          <span className="slider"></span>
-          <span className="card-side"></span>
-          <div className="flip-card__inner">
-            {/* Student Form */}
-            <div className="flip-card__front">
-              <div className="title">Student</div>
-              <form className="flip-card__form" onSubmit={handleStudentSubmit}>
+    <div className='content'>
+      <div className="container">
+        <div className="left">
+          <img className='side-image' src={LoginImg} alt='manlin' />
+        </div>
+        <div className="right">
+          <div className="login-container">
+            <div className='flipbtn'>
+              <button 
+                className={`btnstu ${activeForm === 'student' ? 'active' : ''}`} 
+                onClick={() => handleFormSwitch('student')}
+              >
+                Student
+              </button>
+              <button 
+                className={`btntech ${activeForm === 'teacher' ? 'active' : ''}`} 
+                onClick={() => handleFormSwitch('teacher')}
+              >
+                Teacher
+              </button>
+            </div>
+            
+            {activeForm === 'student' && (
+              <form onSubmit={handleSubmit} className="login-form">
+                <h2>Student Login</h2>
+                {errorMessage && <p className="error">{errorMessage}</p>}
                 <input
-                  className="flip-card__input"
-                  name="input"
-                  placeholder="Reg No / Email"
                   type="text"
+                  placeholder="Email / Reg No"
                   value={input}
-                  onChange={(event : React.ChangeEvent<HTMLInputElement>) => {
-                    handleInputChange(event,true);
-                  }}
                   required
+                  onChange={handleInputChange}
                 />
-                {inputError && (
-                  <div style={{ color: "red", fontSize: "16px" }}>
-                    {inputError}
-                  </div>
-                )}
                 <input
-                  className="flip-card__input"
-                  name="password"
-                  placeholder="Password"
                   type="password"
+                  placeholder="Password"
+                  value={password}
                   required
+                  onChange={(e) => setPassword(e.target.value)}
                 />
-                <button className="flip-card__btn" type="submit">
-                  Submit
-                </button>
+                <button className='btn-button' type="submit">Login</button>
               </form>
-            </div>
-
-            {/* Teacher Form */}
-            <div className="flip-card__back">
-              <div className="title">Teacher</div>
-              <form className="flip-card__form" onSubmit={handleTeacherSubmit}>
+            )}
+            
+            {activeForm === 'teacher' && (
+              <form onSubmit={handleSubmit} className="login-form">
+                <h2>Teacher Login</h2>
+                {errorMessage && <p className="error">{errorMessage}</p>}
                 <input
-                  className="flip-card__input"
-                  name="input"
+                  type="text"
                   placeholder="Email"
-                  type="email"
                   value={input}
-                  onChange={(event : React.ChangeEvent<HTMLInputElement>) => {
-                    handleInputChange(event,false);
-                  }}
                   required
+                  onChange={handleInputChange}
                 />
-                {inputError && (
-                  <div style={{ color: "red", fontSize: "16px" }}>
-                    {inputError}
-                  </div>
-                )}
                 <input
-                  className="flip-card__input"
-                  name="password"
-                  placeholder="Password"
                   type="password"
+                  placeholder="Password"
+                  value={password}
                   required
+                  onChange={(e) => setPassword(e.target.value)}
                 />
-                <button className="flip-card__btn" type="submit">
-                  Submit
-                </button>
+                <Button />
               </form>
-            </div>
+            )}
           </div>
-        </label>
+        </div>
       </div>
     </div>
   );
-};
+}
 
-export default LoginPage;
+export default App;
