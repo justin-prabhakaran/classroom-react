@@ -1,6 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gudea:ital,wght@0,400;0,700;1,400&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+/*Gudea */
+
+
+:root{
+  --primaryBlue : #006FFD;
+  --background : #EAF2FF;
+  --primaryText : #1F2024;
+  --stroke : #C5C6CC;
+  --textLight : #8F9098;
+  --hoverPrimary : #005ed8;
+}
+
+
+*{
+  font-family: 'Inter';
+}
+
 .content {
-  background-color: #ADE1FF;
-  font-family: Arial, sans-serif;
+  background-color: var(--background);
   margin: 0;
   height: 100vh;
   display: flex;
@@ -43,8 +61,8 @@
 .flipbtn {
   display: flex;
   justify-content: space-between;
-  width: 60%;
-  margin-bottom: 20px;
+  width: 100%;
+  /* margin-bottom: 20px; */
 }
 
 .flipbtn button {
@@ -56,6 +74,7 @@
 
 .flipbtn .btnstu {
   padding: 10px;
+  background : white;
   color: black;
   font-size: large;
   font-weight: bolder;
@@ -64,33 +83,38 @@
 }
 
 .flipbtn .btntech {
-  background: #ffffff;
+  background : white;
   padding: 10px;
-  color: #000000;
+  color: black;
   font-size: large;
   font-weight: bolder;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
+  transition: all 1s;
 }
 
-.flipbtn .btntech:hover, .flipbtn .btnstu:hover {
+/* .flipbtn .btntech:hover, .flipbtn .btnstu:hover {
   background-color: #003554;
   color: #ffffff;
-}
+} */
 
 .login-form {
   background-color: white;
   padding: 30px;
   border-radius: 20px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  text-align: center;
+  /* text-align: center; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   width: 100%;
 }
 
 .login-form h2 {
   color: #006FFD;
-  margin-bottom: 20px;
-  font-weight: 500;
+  margin-bottom: 40px;
+  font-weight: bold;
 }
 
 .login-form input {
@@ -105,14 +129,12 @@
 .login-form input[type="text"],
 .login-form input[type="password"] {
   background-color: white;
-  color: #8F9098;
+  color: var(--primaryText);
   margin-bottom: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 250px;
-  margin-left: 20px;
-  margin-top: 50px;
 }
 
 .error {
@@ -123,7 +145,7 @@
 /* switch button */
 .flipbtn .btnstu.active,
 .flipbtn .btntech.active {
-  background-color: #0582CA;;
+  background-color: #0582CA;
   color: #ffffff;
 }
 

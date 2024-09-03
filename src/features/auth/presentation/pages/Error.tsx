@@ -1,4 +1,4 @@
-import Er from '../asset/404 error with a landscape-bro.svg'
+import Er from '../asset/404 error lost in space-pana.svg'
 import './Error.css'
 import { Link } from 'react-router-dom'
 
