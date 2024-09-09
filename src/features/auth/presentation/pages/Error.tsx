@@ -2,7 +2,7 @@ import Er from '../asset/404 error lost in space-pana.svg'
 import './Error.css'
 import { Link } from 'react-router-dom'
 
-function Error() {
+function ErrorPage() {
   return (
     <div className='errorstyle'>
 
@@ -12,7 +12,7 @@ function Error() {
       <p className='textError'>Page Not Found </p>
       </div>
      <div className='error'>
-     <p className='textcont'> opps! The page you are looking for dose not exist. It might have been moved or deleted. </p>
+     <p className='textcont'> oops! The page you are looking for dose not exist. It might have been moved or deleted. </p>
      </div>
         <div className='button'>
                   <button className='backhomebtn'> <Link className='link' to="/">Go to Home</Link></button>
@@ -21,4 +21,4 @@ function Error() {
   )
 }
 
-export default Error
+export default ErrorPage

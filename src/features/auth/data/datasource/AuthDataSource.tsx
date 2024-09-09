@@ -25,8 +25,11 @@ export class AuthDataSourceImpl implements AuthDataSource{
                 email : result.data.email,
                 year : result.data.year,
                 department : result.data.department,
-                section : result.data.section
+                section : result.data.section,
+                jwt : result.data.jwt,
+                securtiyRole : result.data.securityRole
             };
+
             return new StudentModel(student);
         }else throw new Error("Login Failed !!");
     }
@@ -43,7 +46,9 @@ export class AuthDataSourceImpl implements AuthDataSource{
                 email : result.data.email,
                 year : result.data.year,
                 department : result.data.department,
-                section : result.data.section
+                section : result.data.section,
+                jwt : result.data.jwt,
+                securtiyRole : result.data.securtiyRole
             };
 
             return new StudentModel(student);
@@ -62,7 +67,9 @@ export class AuthDataSourceImpl implements AuthDataSource{
             name : result.data.name,
             email : result.data.email,
             department : result.data.department,
-            role : result.data.role
+            role : result.data.role,
+            jwt : result.data.jwt,
+            securityRole : result.data.securtiyRole
          }
 
          return new TeacherModel(teacher);
