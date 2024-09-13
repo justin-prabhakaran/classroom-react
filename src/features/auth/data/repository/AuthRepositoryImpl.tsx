@@ -3,8 +3,14 @@ import Student from "../../domain/entity/Student";
 import Teacher from "../../domain/entity/Teacher";
 import AuthRepository from "../../domain/repository/AuthRepository";
 import { AuthDataSource } from "../datasource/AuthDataSource";
+import StudentModel from "../model/StudentModel";
+import TeacherModel from "../model/TeacherModel";
 
 export default class AuthRepositoryImpl extends AuthRepository{
+   async getCurrentUser(token : string) :Promise< StudentModel | TeacherModel >{
+        return await this.authDataSource.getCurrentUser(token);
+    }
+    
     private authDataSource : AuthDataSource;
     
     constructor(authDataSource : AuthDataSource){
@@ -23,7 +29,15 @@ export default class AuthRepositoryImpl extends AuthRepository{
     }
    
 
-
+    getToken(): string {
+        return this.authDataSource.getToken();
+    }
+    storeToken(token: string): void {
+        return this.authDataSource.storeToken(token);
+    }
+    deleteToken(): void {
+        return this.authDataSource.removeToken();
+    }
    
 
 }
