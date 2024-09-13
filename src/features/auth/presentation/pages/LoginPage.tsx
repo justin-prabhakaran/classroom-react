@@ -2,16 +2,17 @@ import React, { useState, ChangeEvent, FormEvent } from "react";
 import "./LoginPage.css";
 import LoginImg from "../asset/Reset password-pana1.svg";
 import Button from "../Components/Button";
-import {
-  StudentLoginParams,
-  StudentLoginUsecase,
-} from "../../domain/usecase/StudentLoginUsecase";
-import { useDependency } from "../../../../Dependency";
+import { StudentLoginParams } from "../../domain/usecase/StudentLoginUsecase";
+import { useDependencyProvider } from "../../../../DependencyProvider";
 import { useNavigate } from "react-router-dom";
 import { TeacherLoginParams } from "../../domain/usecase/TeacherLoginUsecase";
+import { useUserProvider } from "../../../../UserProvider";
 
 function App() {
-  const { teacherLoginUsecase, studentLoginUsecase } = useDependency();
+
+  const {user,setUser} = useUserProvider(); 
+
+  const { teacherLoginUsecase, studentLoginUsecase } = useDependencyProvider();
 
   const navigate = useNavigate();
 
@@ -63,9 +64,8 @@ function App() {
         try {
           const response = await studentLoginUsecase.execute(param);
           console.log(response);
-          navigate("/homepage", {
-            state: response,
-          });
+          navigate("/homepage");
+          
         } catch (e) {
           console.log(e);
         }
