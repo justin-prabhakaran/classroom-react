@@ -1,18 +1,24 @@
-import React, { useState, ChangeEvent, FormEvent } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 import "./LoginPage.css";
 import LoginImg from "../asset/Reset password-pana1.svg";
 import Button from "../Components/Button";
-import { StudentLoginParams } from "../../domain/usecase/StudentLoginUsecase";
-import { useDependencyProvider } from "../../../../DependencyProvider";
 import { useNavigate } from "react-router-dom";
-import { TeacherLoginParams } from "../../domain/usecase/TeacherLoginUsecase";
-import { useUserProvider } from "../../../../UserProvider";
+
+import { useDispatch, useSelector } from "react-redux";
+import { State } from "../../../../core/redux/store";
+import { bindActionCreators } from "redux";
+import { AuthActionCreators } from "../../redux/AuthActionCreators";
 
 function App() {
 
-  const {user,setUser} = useUserProvider(); 
+  const dispatcher = useDispatch();
 
-  const { teacherLoginUsecase, studentLoginUsecase } = useDependencyProvider();
+  const user = useSelector((state : State) => state.auth);
+
+  const {loginStudent, loginTeacher} = bindActionCreators(AuthActionCreators,dispatcher);
+
+
+
 
   const navigate = useNavigate();
 
@@ -55,35 +61,10 @@ function App() {
 
     if (validateInput(username) == "" && pass != "") {
       if (isStudent) {
-        let param: StudentLoginParams = new StudentLoginParams({
-          email: username,
-          password: pass,
-          registerNumber: Number(username),
-        });
-
-        try {
-          const response = await studentLoginUsecase.execute(param);
-          console.log(response);
-          navigate("/homepage");
-          
-        } catch (e) {
-          console.log(e);
-        }
+          loginStudent(username,pass,Number(username));
+        
       } else {
-        let param: TeacherLoginParams = new TeacherLoginParams({
-          email: username,
-          password: pass,
-        });
-
-        try {
-          const response = await teacherLoginUsecase.execute(param);
-          console.log(response);
-          navigate("/homepage", {
-            state: response,
-          });
-        } catch (e) {
-          console.log(e);
-        }
+          loginTeacher(username,pass);
       }
     } else {
       console.log("Fuck you !!");
