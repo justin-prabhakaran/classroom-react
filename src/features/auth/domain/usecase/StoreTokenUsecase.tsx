@@ -9,9 +9,7 @@ export default class StoreTokenUsecase implements Usecase<void, StoreTokenParams
   }
     execute(params: StoreTokenParams): void {
         return this.authRepository.storeToken(params.token);
-    }
-
-  
+    }  
 }
 
 export class StoreTokenParams{

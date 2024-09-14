@@ -5,22 +5,18 @@ import Button from "../Components/Button";
 import { useNavigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
-import { State } from "../../../../core/redux/store";
-import { bindActionCreators } from "redux";
-import { AuthActionCreators } from "../../redux/AuthActionCreators";
+import { AppDispatch, AppState } from "../../../../core/redux/store";
+import { loginStudent, loginTeacher } from "../../redux/AuthActions";
+
 
 function App() {
 
-  const dispatcher = useDispatch();
+  const dispatch  : AppDispatch = useDispatch<AppDispatch>();
 
-  const user = useSelector((state : State) => state.auth);
+  const {isLoading, data , error} = useSelector((state : AppState) => state.auth);
+  console.log(data)
+  
 
-  const {loginStudent, loginTeacher} = bindActionCreators(AuthActionCreators,dispatcher);
-
-
-
-
-  const navigate = useNavigate();
 
   const [activeForm, setActiveForm] = useState<"student" | "teacher">(
     "student"
@@ -61,10 +57,9 @@ function App() {
 
     if (validateInput(username) == "" && pass != "") {
       if (isStudent) {
-          loginStudent(username,pass,Number(username));
-        
+        dispatch(loginStudent(username,pass,Number(username)));
       } else {
-          loginTeacher(username,pass);
+          dispatch(loginTeacher(username,pass));
       }
     } else {
       console.log("Fuck you !!");
