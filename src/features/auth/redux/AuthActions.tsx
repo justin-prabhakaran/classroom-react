@@ -1,16 +1,16 @@
 import { Dispatch } from "redux";
-import { AuthAction, AuthActions } from "./AuthReducer";
+import { AuthActions } from "./AuthReducer";
 import { useDependencyProvider } from "../../../DependencyProvider";
-import { StudentLoginParams } from "../domain/usecase/StudentLoginUsecase";
+import { StudentLoginParams, StudentLoginUsecase } from "../domain/usecase/StudentLoginUsecase";
 import { TeacherLoginParams } from "../domain/usecase/TeacherLoginUsecase";
-import { AppDispatch } from "../../../core/redux/store";
+import { AppState } from "../../../core/redux/store";
+
 
 
 export function loginStudent(email: string, password: string, registerNumber: number) {
 
-    return async function (dispatch: Dispatch) {
-       
-        const {studentLoginUsecase} = useDependencyProvider();
+    return async function (dispatch: Dispatch, _getState : () => AppState, {studentLoginUsecase} : {studentLoginUsecase : StudentLoginUsecase}) {
+
        
         try{
             dispatch({

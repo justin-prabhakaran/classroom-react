@@ -30,31 +30,31 @@ export enum AuthActions {
 //     }
 // }
 
-export interface LoadingAction{
-    type : AuthActions.LOADING_STATE
+export interface LoadingAction {
+    type: AuthActions.LOADING_STATE
 }
 
-export interface SuccessAction{
-    type : AuthActions.SUCCESS_STATE,
-    payload : Teacher | Student,
+export interface SuccessAction {
+    type: AuthActions.SUCCESS_STATE,
+    payload: Teacher | Student,
 }
 
-export interface ErrorAction{
-    type : AuthActions.FAILURE_STATE
-    payload : string 
+export interface ErrorAction {
+    type: AuthActions.FAILURE_STATE
+    payload: string
 }
 
 
-export interface AuthState{
-    isLoading : boolean,
-    data : Teacher | Student | null,
-    error : string | null
+export interface AuthState {
+    isLoading: boolean,
+    data: Teacher | Student | null,
+    error: string | null
 }
 
-const initialState : AuthState = {
-    isLoading : false,
-    data : null,
-    error : null,
+const initialState: AuthState = {
+    isLoading: false,
+    data: null,
+    error: null,
 }
 
 
@@ -62,30 +62,30 @@ const initialState : AuthState = {
 export type AuthAction = LoadingAction | SuccessAction | ErrorAction;
 
 
-export function authReducer(state : AuthState = initialState, action: AuthAction) : AuthState {
+export function authReducer(state: AuthState = initialState, action: AuthAction): AuthState {
 
-
+    console.log(action.type + " called  !!");
     switch (action.type) {
-        case AuthActions.LOADING_STATE : {
+        case AuthActions.LOADING_STATE: {
             return {
                 ...state,
-                isLoading : true,
-                error : null
+                isLoading: true,
+                error: null
             }
         }
-        case AuthActions.SUCCESS_STATE : {
-            return{
-                ...state,
-                data : action.payload,
-                isLoading : false,
-                error : null
-            }
-        }
-        case AuthActions.FAILURE_STATE : {
+        case AuthActions.SUCCESS_STATE: {
             return {
                 ...state,
-                isLoading : false,
-                error : action.payload
+                data: action.payload,
+                isLoading: false,
+                error: null
+            }
+        }
+        case AuthActions.FAILURE_STATE: {
+            return {
+                ...state,
+                isLoading: false,
+                error: action.payload
             }
         }
         default: return state;

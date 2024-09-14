@@ -2,7 +2,6 @@ import { useState, ChangeEvent, FormEvent } from "react";
 import "./LoginPage.css";
 import LoginImg from "../asset/Reset password-pana1.svg";
 import Button from "../Components/Button";
-import { useNavigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, AppState } from "../../../../core/redux/store";
@@ -11,12 +10,11 @@ import { loginStudent, loginTeacher } from "../../redux/AuthActions";
 
 function App() {
 
-  const dispatch  : AppDispatch = useDispatch<AppDispatch>();
+  const dispatch: AppDispatch = useDispatch<AppDispatch>();
 
-  const {isLoading, data , error} = useSelector((state : AppState) => state.auth);
-  console.log(data)
+  const { isLoading, data, error } = useSelector((state: AppState) => state.auth);
+  console.log(isLoading);
   
-
 
   const [activeForm, setActiveForm] = useState<"student" | "teacher">(
     "student"
@@ -57,9 +55,9 @@ function App() {
 
     if (validateInput(username) == "" && pass != "") {
       if (isStudent) {
-        dispatch(loginStudent(username,pass,Number(username)));
+        dispatch(loginStudent(username, pass, Number(username)));
       } else {
-          dispatch(loginTeacher(username,pass));
+        dispatch(loginTeacher(username, pass));
       }
     } else {
       console.log("Fuck you !!");
