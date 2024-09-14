@@ -7,8 +7,9 @@ import { thunk } from "redux-thunk";
 export const store = configureStore(
     {
         reducer: reducers,
-        middleware: () => new Tuple(thunk)
+        middleware: (getMiddleware) => getMiddleware() 
     }
 )
 
-export type State = ReturnType<typeof reducers>
+export type AppState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch;
