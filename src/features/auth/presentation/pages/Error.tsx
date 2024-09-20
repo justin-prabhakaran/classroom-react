@@ -15,7 +15,7 @@ function ErrorPage() {
      <p className='textcont'> oops! The page you are looking for dose not exist. It might have been moved or deleted. </p>
      </div>
         <div className='button'>
-                  <button className='backhomebtn'> <Link className='link' to="/">Go to Home</Link></button>
+                <button className='backhomebtn'> <Link className='link' to="/">Go to Home</Link></button>
         </div>
     </div>
   )

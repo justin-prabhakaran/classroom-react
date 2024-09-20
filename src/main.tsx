@@ -21,6 +21,7 @@ createRoot(document.getElementById("root")!).render(
             <Route path="/" element={<App />} />
             <Route path="/homepage" element={<Home />} />
             <Route path="*" element={<ErrorPage />} />
+            <Route path="Home" element={<Home/>} />
           </Routes>
         </Provider>
       </DependencyProvider>

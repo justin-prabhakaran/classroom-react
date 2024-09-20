@@ -64,9 +64,13 @@ export type AuthAction = LoadingAction | SuccessAction | ErrorAction;
 
 export function authReducer(state: AuthState = initialState, action: AuthAction): AuthState {
 
-    console.log(action.type + " called  !!");
+    if (!action.type.startsWith('@@redux')) {
+        console.log(action.type + " called  !!");
+    }
     switch (action.type) {
         case AuthActions.LOADING_STATE: {
+            console.log("loading state.....");
+            
             return {
                 ...state,
                 isLoading: true,
@@ -74,6 +78,7 @@ export function authReducer(state: AuthState = initialState, action: AuthAction)
             }
         }
         case AuthActions.SUCCESS_STATE: {
+            console.log("success state.....");
             return {
                 ...state,
                 data: action.payload,
@@ -82,13 +87,17 @@ export function authReducer(state: AuthState = initialState, action: AuthAction)
             }
         }
         case AuthActions.FAILURE_STATE: {
+            console.log("faile state.....");
             return {
                 ...state,
                 isLoading: false,
                 error: action.payload
             }
         }
-        default: return state;
+        default:{
+            console.log("--------->");
+            
+             return state;}
     }
 
 }
