@@ -196,6 +196,34 @@
   }
 
   .login-form .btn-button {
+  
     width: 100%; /* Button takes full width on mobile */
   }
+}
+
+
+.error-bottom-left {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  z-index: 9999;
+}
+
+.error__icon {
+  margin-right: 10px;
+}
+
+.error__title {
+  flex: 1;
+}
+
+.error__close {
+  cursor: pointer;
 }
