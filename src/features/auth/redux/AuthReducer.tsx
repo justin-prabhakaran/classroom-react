@@ -41,15 +41,20 @@ export interface SuccessAction {
 
 export interface ErrorAction {
     type: AuthActions.FAILURE_STATE
-    payload: string
+    payload: ErrorPayload
 }
 
 
+export interface ErrorPayload{
+    code : string,
+    data : string 
+}
 export interface AuthState {
     isLoading: boolean,
     data: Teacher | Student | null,
-    error: string | null
+    error: ErrorPayload | null
 }
+
 
 const initialState: AuthState = {
     isLoading: false,
@@ -87,11 +92,14 @@ export function authReducer(state: AuthState = initialState, action: AuthAction)
             }
         }
         case AuthActions.FAILURE_STATE: {
-            console.log("faile state.....");
+            console.log("failure state.....");
             return {
                 ...state,
                 isLoading: false,
-                error: action.payload
+                error: {
+                    code : "error",
+                    data : action.payload.data
+                }
             }
         }
         default:{

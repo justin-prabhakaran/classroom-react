@@ -3,12 +3,14 @@ import { createRoot } from "react-dom/client";
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ErrorPage from "./features/auth/presentation/pages/Error";
-import App from "./features/auth/presentation/pages/LoginPage";
+
 import Home from "./features/auth/presentation/pages/Home";
 
 
 import { Provider } from "react-redux";
 import { store } from "./core/redux/store";
+// import App from "./App";
+import LoginPage from "./features/auth/presentation/pages/LoginPage";
 
 
 createRoot(document.getElementById("root")!).render(
@@ -17,8 +19,8 @@ createRoot(document.getElementById("root")!).render(
       {/* <DependencyProvider> */}
       <Provider store={store}>
         <Routes>
-          <Route path="/" element={<App />} />
-          <Route path="/homepage" element={<Home />} />
+          <Route path="/" element={<LoginPage />} />
+          <Route path="/home" element={<Home />} />
           <Route path="*" element={<ErrorPage />} />
           <Route path="Home" element={<Home />} />
         </Routes>
