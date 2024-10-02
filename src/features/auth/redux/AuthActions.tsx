@@ -7,9 +7,10 @@ import { AppState } from "../../../core/redux/store";
 import { GetCurrentUserUsecase } from "../domain/usecase/GetCurrentUserUsecase";
 import { NoParams } from "../../../core/utils/Usecase";
 import GetTokenUsecase from "../domain/usecase/GetTokenUsecase";
-import Student from "../domain/entity/Student.tsx";
-import Teacher from "../domain/entity/Teacher.tsx";
+
 import StoreTokenUsecase from "../domain/usecase/StoreTokenUsecase.tsx";
+import {Student} from "../domain/entity/Student.tsx";
+import {Teacher} from "../domain/entity/Teacher.tsx";
 
 
 export function loginStudent(email: string, password: string, registerNumber: number) {
