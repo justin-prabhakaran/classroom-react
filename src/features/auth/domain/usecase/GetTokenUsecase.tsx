@@ -8,6 +8,7 @@ export default class GetTokenUsecase implements Usecase<string, NoParams> {
     this.authRepository = authRepository;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   execute(_params: NoParams): string {
     return this.authRepository.getToken();
   }

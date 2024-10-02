@@ -1,6 +1,5 @@
-
-import Student from "../domain/entity/Student"
-import Teacher from "../domain/entity/Teacher"
+import {Teacher} from "../domain/entity/Teacher.tsx";
+import {Student} from "../domain/entity/Student.tsx";
 
 
 export enum AuthActions {

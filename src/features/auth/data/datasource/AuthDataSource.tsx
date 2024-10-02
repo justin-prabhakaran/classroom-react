@@ -1,20 +1,17 @@
-import StudentModel from "../model/StudentModel";
-
 import axios from "axios";
-import { API_URL, TOKEN_KEY } from "../../../../core/utils/Constants";
-import Student from "../../domain/entity/Student";
-import TeacherModel from "../model/TeacherModel";
-import Teacher from "../../domain/entity/Teacher";
+import {API_URL, TOKEN_KEY} from "../../../../core/utils/Constants";
+import {Student} from "../../domain/entity/Student.tsx";
+import {Teacher} from "../../domain/entity/Teacher.tsx";
 
 export interface AuthDataSource {
-  getStudentWithEmail(email: string, pass: string): Promise<StudentModel>;
+  getStudentWithEmail(email: string, pass: string): Promise<Student>;
 
   getStudentWithRegisterNumber(
     registerNumber: number,
     pass: string
-  ): Promise<StudentModel>;
+  ): Promise<Student>;
 
-  getTeacherWithEmail(email: string, pass: string): Promise<TeacherModel>;
+  getTeacherWithEmail(email: string, pass: string): Promise<Teacher>;
 
   storeToken(token: string): void;
 
@@ -28,14 +25,40 @@ export interface AuthDataSource {
 }
 
 export class AuthDataSourceImpl implements AuthDataSource {
-  async getCurrentUser(token: string): Promise<StudentModel | TeacherModel> {
-    let result : StudentModel | TeacherModel = await axios.get(API_URL + "/me",{
-        headers : {
-            Authorization : "Bearer " + token 
-        }
+  async getCurrentUser(token: string): Promise<Student | Teacher> {
+    const result =  await axios.get(API_URL + "/me", {
+      headers: {
+        Authorization: "Bearer " + token
+      }
     });
-    
-    return result;
+
+    if(result.status){
+      const data = result.data;
+
+      if(data.securityRole === "STUDENT"){
+        return {
+          registerNumber: data.registerNumber,
+          name: data.name,
+          email: data.email,
+          year: data.year,
+          department: data.department,
+          section: data.section,
+          securityRole: data.securityRole,
+          jwt: data.jwt
+        };
+      }
+      else if(data.securityRole === "TEACHER"){
+        return {
+          name : data.name,
+          email : data.email,
+          department : data.department,
+          role : data.role,
+          securityRole : data.securityRole,
+          jwt : data.jwt
+        };
+      }
+      else throw new Error("Unknown Security Role !!" + data.securityRole);
+    }else throw new Error("Failed to sign in!");
     
   }
   removeToken(): void {
@@ -43,7 +66,7 @@ export class AuthDataSourceImpl implements AuthDataSource {
   }
 
   getToken(): string {
-    let res: string | null = localStorage.getItem(TOKEN_KEY);
+    const res: string | null = localStorage.getItem(TOKEN_KEY);
     if (!res) {
       throw new Error("TOKEN NOT FOUND !!");
     }
@@ -58,13 +81,13 @@ export class AuthDataSourceImpl implements AuthDataSource {
   async getStudentWithEmail(
     email: string,
     pass: string
-  ): Promise<StudentModel> {
-    let result = await axios.post(API_URL + "/login/student", {
+  ): Promise<Student> {
+    const result = await axios.post(API_URL + "/login/student", {
       email: email,
       pass: pass,
     });
     if (result.status == 200) {
-      let student: Student = {
+      return {
         registerNumber: result.data.registerNumber,
         name: result.data.name,
         email: result.data.email,
@@ -74,22 +97,20 @@ export class AuthDataSourceImpl implements AuthDataSource {
         jwt: result.data.jwt,
         securityRole: result.data.securityRole,
       };
-
-      return new StudentModel(student);
     } else throw new Error("Login Failed !!");
   }
 
   async getStudentWithRegisterNumber(
     registerNumber: number,
     pass: string
-  ): Promise<StudentModel> {
-    let result = await axios.post(API_URL + "/login/student", {
+  ): Promise<Student> {
+    const result = await axios.post(API_URL + "/login/student", {
       regno: registerNumber,
       pass: pass,
     });
 
     if (result.status == 200) {
-      let student: Student = {
+      return {
         registerNumber: result.data.registerNumber,
         name: result.data.name,
         email: result.data.email,
@@ -98,32 +119,28 @@ export class AuthDataSourceImpl implements AuthDataSource {
         section: result.data.section,
         jwt: result.data.jwt,
         securityRole: result.data.securityRole,
-      };
-
-      return new StudentModel(student);
+      }
     } else throw new Error("Login Failed !!");
   }
 
   async getTeacherWithEmail(
     email: string,
     pass: string
-  ): Promise<TeacherModel> {
-    let result = await axios.post(API_URL + "/login/teacher", {
+  ): Promise<Teacher> {
+    const result = await axios.post(API_URL + "/login/teacher", {
       email: email,
       pass: pass,
     });
 
     if (result.status == 200) {
-      let teacher: Teacher = {
+      return {
         name: result.data.name,
         email: result.data.email,
-        department: result.data.department,
-        role: result.data.role,
-        jwt: result.data.jwt,
-        securityRole: result.data.securtiyRole,
-      };
-
-      return new TeacherModel(teacher);
+          department: result.data.department,
+          role: result.data.role,
+          jwt: result.data.jwt,
+          securityRole: result.data.securtiyRole,
+      }
     } else throw new Error("Login Failed !!");
   }
 }

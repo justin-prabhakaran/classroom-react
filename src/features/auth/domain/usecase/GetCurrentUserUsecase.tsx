@@ -1,7 +1,7 @@
 import Usecase from "../../../../core/utils/Usecase";
-import Student from "../entity/Student";
-import Teacher from "../entity/Teacher";
 import AuthRepository from "../repository/AuthRepository";
+import {Student} from "../entity/Student.tsx";
+import {Teacher} from "../entity/Teacher.tsx";
 
 export class GetCurrentUserUsecase implements Usecase< Promise<Student | Teacher>  ,GetCurrentUSerParams >{
     
@@ -12,8 +12,7 @@ export class GetCurrentUserUsecase implements Usecase< Promise<Student | Teacher
     }
     
     async execute(params: GetCurrentUSerParams): Promise<Student | Teacher> {
-        let result : Student | Teacher = await this.authRepository.getCurrentUser(params.token);
-        return result;
+        return await this.authRepository.getCurrentUser(params.token);
 
     }
 
